@@ -22,7 +22,7 @@ class RepositoryUtils {
                     } else if (it.isSuccess()) {
                         createData(it.showapi_res_body)
                     } else {
-                        Observable.error<T>(ResponseException(it.showapi_res_code, it.showapi_res_error))
+                        Observable.error<T>(ResponseException(it))
                     }
                 }
             }

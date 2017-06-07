@@ -6,6 +6,8 @@ package com.wkw.hot.model
 data class PopularModel(
         var ctime: String?,
         var title: String,
+
         var description: String,
+
         var picUrl: String?,
         var url: String?)
