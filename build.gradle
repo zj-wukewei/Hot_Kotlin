@@ -1,0 +1,59 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.1.2-4'
+    repositories {
+        maven { url 'https://maven.google.com' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+def daggerVersion = "2.11"
+def retrofitVersion = "2.2.0"
+def supportVersion = "25.2.0"
+def okHttpVersion = '3.6.0'
+def gsonVersion = '2.7'
+def rxJavaVersion = '2.0.2'
+def rxAndroidVersion = '2.0.1'
+
+project.ext {
+    applicationId = "com.wkw.hot"
+    buildToolsVersion = "25.0.1"
+    compileSdkVersion = 25
+    minSdkVersion = 16
+    targetSdkVersion = 25
+    versionCode = 1
+    versionName = "1.0.0"
+    libSupportAppcompat = "com.android.support:appcompat-v7:${supportVersion}"
+    libSupportDesign = "com.android.support:design:${supportVersion}"
+    libSupportRecyclerview = "com.android.support:recyclerview-v7:${supportVersion}"
+    libSupportV4 = "com.android.support:support-v4:${supportVersion}"
+    libRxAndroid = "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    libRxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    libGson = "com.google.code.gson:gson:${gsonVersion}"
+    libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    libRetrofitConverterGson = "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    libRetrofitAdapterRxJava = "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    libOkHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    libDagger = "com.google.dagger:dagger:${daggerVersion}"
+    libDaggerCompiler = "com.google.dagger:dagger-compiler:${daggerVersion}"
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.google.com' }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
