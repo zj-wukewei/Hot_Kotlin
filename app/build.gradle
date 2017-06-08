@@ -35,6 +35,7 @@ dependencies {
     kapt rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libDagger
     compile rootProject.ext.libRxJava
+    compile rootProject.ext.libGlide
     compile rootProject.ext.libRxAndroid
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportV4

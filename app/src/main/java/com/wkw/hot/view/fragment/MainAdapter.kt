@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.wkw.hot.R
 import com.wkw.hot.model.PopularModel
+import com.wkw.hot.util.loadUrl
 import com.wkw.hot.util.singeleClick
 import kotlinx.android.synthetic.main.item_main.view.*
 
@@ -34,6 +35,7 @@ class MainAdapter(val listener: () -> Unit) : RecyclerView.Adapter<MainAdapter.V
 
         fun bind(model: PopularModel) {
             with(model) {
+                itemView.img_item.loadUrl("$picUrl")
                 itemView.tv_title.text = "$title"
                 itemView.tv_description.text = "来自:${description}"
             }
