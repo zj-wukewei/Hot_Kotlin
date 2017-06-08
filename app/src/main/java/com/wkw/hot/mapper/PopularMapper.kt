@@ -8,10 +8,10 @@ import com.wkw.hot.model.PopularModel
  */
 class PopularMapper {
     fun transform(populars: List<PopularEntity>): List<PopularModel> {
-        return populars.filter { it.title?.isEmpty() ?: false }.mapNotNull { transform(it) }
+        return populars.mapNotNull { transform(it) }
     }
 
-    fun transform(popularEntity: PopularEntity) = popularEntity.title.let {
+    fun transform(popularEntity: PopularEntity) = popularEntity.title?.let {
         PopularModel(popularEntity.ctime, popularEntity.title!!, popularEntity.description, popularEntity.picUrl, popularEntity.url)
     }
 

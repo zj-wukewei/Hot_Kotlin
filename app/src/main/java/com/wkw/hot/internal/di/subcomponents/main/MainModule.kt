@@ -5,10 +5,9 @@ import com.wkw.hot.domain.executor.ThreadExecutor
 import com.wkw.hot.domain.interactor.PopularListUserCse
 import com.wkw.hot.domain.repository.HotRepository
 import com.wkw.hot.internal.PerActivity
-import com.wkw.hot.internal.di.module.ActivityModule
 import com.wkw.hot.mapper.PopularMapper
-import com.wkw.hot.view.activity.MainActivity
 import com.wkw.hot.view.contract.MainContract
+import com.wkw.hot.view.fragment.MainFragment
 import com.wkw.hot.view.presenter.MainPresenter
 import dagger.Module
 import dagger.Provides
@@ -17,11 +16,11 @@ import dagger.Provides
  * Created by hzwukewei on 2017-6-6.
  */
 @Module
-class MainModule(activity: MainActivity) : ActivityModule(activity) {
+class MainModule(val fragment: MainFragment) {
 
     @Provides
     @PerActivity
-    fun provideMainView(): MainContract.MainView = activity as MainContract.MainView
+    fun provideMainView(): MainContract.MainView = fragment as MainContract.MainView
 
     @Provides
     @PerActivity

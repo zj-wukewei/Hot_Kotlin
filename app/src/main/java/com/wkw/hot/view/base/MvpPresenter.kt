@@ -7,8 +7,8 @@ interface MvpPresenter<V : MvpView> {
 
     var mView: V
 
-    fun attachView(view: V) {
-        mView = view
+    fun getView(): V {
+        return mView
     }
 
     fun resume()

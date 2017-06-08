@@ -16,18 +16,27 @@ class MainPresenter(override var mView: MainContract.MainView,
                     private var getPopularListUserCse: PopularListUserCse) : MainContract.Presenter {
 
     override fun getPoplars(page: Int, word: String) {
+        getView().showLoading()
         getPopularListUserCse.setParam(page, word)
         getPopularListUserCse.execute(object : DefaultObserver<PagePopularEntity>() {
 
             override fun onError(e: Throwable?) {
                 super.onError(e)
-                val msg = mView.context().createException(e as Exception)
-                mView.context().showToast(msg)
+                getView().hideLoading()
+                getView().showRetry()
+                val msg = getView().context().createException(e as Exception)
+                getView().context().showToast(msg)
+            }
+
+            override fun onComplete() {
+                super.onComplete()
+                getView().hideLoading()
+                getView().hideRetry()
             }
 
             override fun onNext(value: PagePopularEntity) {
                 super.onNext(value)
-                mView.showPoplars(popularMapper.transform(value.pagebean.contentlist))
+                getView().showPoplars(popularMapper.transform(value.pagebean.contentlist))
             }
         })
     }

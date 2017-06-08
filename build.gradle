@@ -36,6 +36,7 @@ project.ext {
     libSupportV4 = "com.android.support:support-v4:${supportVersion}"
     libRxAndroid = "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
     libRxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    libCardview = "com.android.support:cardview-v7:${supportVersion}"
 
     libGson = "com.google.code.gson:gson:${gsonVersion}"
     libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"

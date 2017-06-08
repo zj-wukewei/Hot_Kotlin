@@ -1,53 +1,56 @@
 package com.wkw.hot.view.activity
 
-import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.wkw.hot.HotApp
 import com.wkw.hot.R
-import com.wkw.hot.internal.di.subcomponents.main.MainModule
-import com.wkw.hot.model.PopularModel
-import com.wkw.hot.view.contract.MainContract
-import com.wkw.hot.view.presenter.MainPresenter
-import javax.inject.Inject
+import com.wkw.hot.view.base.ToolbarManager
+import com.wkw.hot.view.fragment.MainFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainContract.MainView {
+class MainActivity : AppCompatActivity(), ToolbarManager {
 
-
-    @Inject
-    lateinit var presenter: MainPresenter
+    override val toolbar by lazy {
+        tool_bar
+    }
+    lateinit var mFragments: MutableList<Fragment>
+    lateinit var mTitles: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        HotApp.graph.plus(MainModule(this))
-                .injectTo(this)
-        presenter.getPoplars(1, "你好")
+        initFragment()
+        initView()
     }
 
-    override fun showPoplars(populars: List<PopularModel>) {
-        Log.d("main", populars.size.toString())
+    private fun initFragment() {
+        mFragments = ArrayList()
+        mTitles = ArrayList()
+        val tabs = resources.getStringArray(R.array.main_tabs)
+        for (tab in tabs) {
+            mTitles.add(tab)
+            mFragments.add(MainFragment.newInstance(tab))
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.resume()
-    }
+    private fun initView() {
+        toolbarTitle = getString(R.string.app_name)
+        viewpager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+            override fun getItem(position: Int): android.support.v4.app.Fragment {
+                return mFragments[position]
+            }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.pause()
-    }
+            override fun getCount(): Int {
+                return mFragments.size
+            }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.destroy()
-    }
+            override fun getPageTitle(position: Int): CharSequence {
+                return mTitles[position]
+            }
 
-    override fun context(): Context {
-        return this
+        }
+        tab_layout.setupWithViewPager(viewpager)
     }
-
 
 }

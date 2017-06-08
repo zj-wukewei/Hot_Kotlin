@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
@@ -31,13 +32,15 @@ dependencies {
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     kapt rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libDagger
     compile rootProject.ext.libRxJava
     compile rootProject.ext.libRxAndroid
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportV4
+    compile rootProject.ext.libCardview
+    compile rootProject.ext.libSupportDesign
+    compile rootProject.ext.libSupportRecyclerview
     compile rootProject.ext.libRetrofit
     compile rootProject.ext.libRetrofitConverterGson
     compile rootProject.ext.libRetrofitAdapterRxJava

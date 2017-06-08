@@ -1,7 +1,7 @@
 package com.wkw.hot.internal.di.subcomponents.main
 
 import com.wkw.hot.internal.PerActivity
-import com.wkw.hot.view.activity.MainActivity
+import com.wkw.hot.view.fragment.MainFragment
 import dagger.Subcomponent
 
 /**
@@ -12,5 +12,5 @@ import dagger.Subcomponent
         MainModule::class
 ))
 interface MainComponent {
-    fun injectTo(activity: MainActivity)
+    fun injectTo(fragment: MainFragment)
 }
