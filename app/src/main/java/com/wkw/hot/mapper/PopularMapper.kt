@@ -1,6 +1,5 @@
 package com.wkw.hot.mapper
 
-import android.text.TextUtils
 import com.wkw.hot.domain.model.PopularEntity
 import com.wkw.hot.model.PopularModel
 
@@ -9,7 +8,7 @@ import com.wkw.hot.model.PopularModel
  */
 class PopularMapper {
     fun transform(populars: List<PopularEntity>): List<PopularModel> {
-        return populars.filter { it.title == null || TextUtils.isEmpty(it.title) }.mapNotNull { transform(it) }
+        return populars.filter { it.title?.isEmpty() ?: false }.mapNotNull { transform(it) }
     }
 
     fun transform(popularEntity: PopularEntity) = popularEntity.title.let {

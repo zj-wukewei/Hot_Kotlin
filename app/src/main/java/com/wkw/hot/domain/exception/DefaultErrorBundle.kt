@@ -3,7 +3,7 @@ package com.wkw.hot.domain.exception
 /**
  * Created by hzwukewei on 2017-6-6.
  */
-public class DefaultErrorBundle(exception: Exception?) : ErrorBundle {
+class DefaultErrorBundle(exception: Exception?) : ErrorBundle {
 
     var mException: Exception? = exception
 
