@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.wkw.hot.HotApp
 import com.wkw.hot.R
 import com.wkw.hot.internal.di.subcomponents.main.MainModule
 import com.wkw.hot.model.PopularModel
+import com.wkw.hot.view.base.HotLazyFragment
 import com.wkw.hot.view.contract.MainContract
 import com.wkw.hot.view.presenter.MainPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -18,10 +20,14 @@ import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.view_retry.*
 import javax.inject.Inject
 
+
+
 /**
  * Created by hzwukewei on 2017-6-8.
  */
-class MainFragment : Fragment(), MainContract.MainView {
+class MainFragment : HotLazyFragment(), MainContract.MainView {
+
+    private val TAG: String = MainFragment::class.java.simpleName
 
     companion object {
         val TYPE: String = "TYPE"
@@ -38,18 +44,27 @@ class MainFragment : Fragment(), MainContract.MainView {
     lateinit var presenter: MainPresenter
 
     var page: Int = 0
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        Log.d(TAG, "onCreateView")
+        if (mFragmentView == null) {
+            mFragmentView = inflater.inflate(R.layout.fragment_main, null)
+        }
+        return mFragmentView
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         HotApp.graph.plus(MainModule(this))
                 .injectTo(this)
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun fetchData() {
         val type = arguments?.getString(TYPE)
         type?.let {
             presenter.getPoplars(page, type)
         }
+
     }
 
     override fun showPoplars(populars: List<PopularModel>?) {
