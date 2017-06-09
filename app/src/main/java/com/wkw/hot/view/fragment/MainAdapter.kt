@@ -9,12 +9,15 @@ import com.wkw.hot.model.PopularModel
 import com.wkw.hot.util.loadUrl
 import com.wkw.hot.util.singeleClick
 import kotlinx.android.synthetic.main.item_main.view.*
+import kotlin.properties.Delegates
 
 /**
  * Created by hzwukewei on 2017-6-8.
  */
-class MainAdapter(val populars: List<PopularModel>, val listener: (PopularModel) -> Unit) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(val listener: (PopularModel) -> Unit) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
+
+    var populars: List<PopularModel> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(populars[position])
@@ -30,7 +33,7 @@ class MainAdapter(val populars: List<PopularModel>, val listener: (PopularModel)
     }
 
 
-     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
         fun bind(model: PopularModel) {
             with(model) {

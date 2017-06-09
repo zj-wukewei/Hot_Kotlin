@@ -68,10 +68,10 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     }
 
     private fun initView() {
-        mAdapter = MainAdapter(mList) {
+        mAdapter = MainAdapter {
             context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
         }
-
+        mAdapter.populars = mList
         recycler_view.adapter = mAdapter
         recycler_view.layoutManager = LinearLayoutManager(activity)
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -102,7 +102,7 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
         populars?.let {
             hasMore = (populars.size >= DomainConstanst.PAGE_SIZE)
             mList.addAll(populars)
-            mAdapter.notifyDataSetChanged()
+            mAdapter.populars = mList
         }
     }
 
