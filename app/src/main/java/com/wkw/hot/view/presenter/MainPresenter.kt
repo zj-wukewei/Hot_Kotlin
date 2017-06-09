@@ -1,7 +1,7 @@
 package com.wkw.hot.view.presenter
 
 import com.wkw.hot.domain.interactor.DefaultObserver
-import com.wkw.hot.domain.interactor.PopularListUserCse
+import com.wkw.hot.domain.interactor.PopularListUserCase
 import com.wkw.hot.domain.model.PagePopularEntity
 import com.wkw.hot.exception.createException
 import com.wkw.hot.mapper.PopularMapper
@@ -13,12 +13,12 @@ import com.wkw.hot.view.contract.MainContract
  */
 class MainPresenter(override var mView: MainContract.MainView,
                     private var popularMapper: PopularMapper,
-                    private var getPopularListUserCse: PopularListUserCse) : MainContract.Presenter {
+                    private var getPopularListUserCase: PopularListUserCase) : MainContract.Presenter {
 
     override fun getPoplars(page: Int, word: String) {
         getView().showLoading()
-        getPopularListUserCse.setParam(page, word)
-        getPopularListUserCse.execute(object : DefaultObserver<PagePopularEntity>() {
+        getPopularListUserCase.setParam(page, word)
+        getPopularListUserCase.execute(object : DefaultObserver<PagePopularEntity>() {
 
             override fun onError(e: Throwable?) {
                 super.onError(e)
@@ -48,7 +48,7 @@ class MainPresenter(override var mView: MainContract.MainView,
     }
 
     override fun destroy() {
-        getPopularListUserCse.dispose()
+        getPopularListUserCase.dispose()
     }
 
 

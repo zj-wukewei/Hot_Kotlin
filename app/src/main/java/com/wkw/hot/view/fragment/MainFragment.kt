@@ -3,12 +3,14 @@ package com.wkw.hot.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wkw.hot.HotApp
 import com.wkw.hot.R
+import com.wkw.hot.domain.DomainConstanst
 import com.wkw.hot.internal.di.subcomponents.main.MainModule
 import com.wkw.hot.model.PopularModel
 import com.wkw.hot.util.startActivity
@@ -44,6 +46,9 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     lateinit var presenter: MainPresenter
 
     var page: Int = 0
+    var hasMore: Boolean = true
+    private lateinit var mAdapter: MainAdapter
+    private var mList = ArrayList<PopularModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         Log.d(TAG, "onCreateView")
@@ -63,6 +68,21 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     }
 
     private fun initView() {
+        mAdapter = MainAdapter(mList) {
+            context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
+        }
+
+        recycler_view.adapter = mAdapter
+        recycler_view.layoutManager = LinearLayoutManager(activity)
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView?.canScrollVertically(1)!!) {
+                    ++page
+                    fetchData()
+                }
+            }
+        })
         bt_retry.setOnClickListener {
             fetchData()
         }
@@ -71,21 +91,18 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     override fun fetchData() {
         val type = arguments?.getString(TYPE)
         type?.let {
-            presenter.getPoplars(page, type)
+            if (hasMore) {
+                presenter.getPoplars(page, type)
+            }
         }
 
     }
 
     override fun showPoplars(populars: List<PopularModel>?) {
-
         populars?.let {
-            val adapter = MainAdapter {
-                context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
-            }
-            adapter.populars = populars
-            recycler_view.adapter = adapter
-            recycler_view.layoutManager = LinearLayoutManager(activity)
-            adapter.notifyDataSetChanged()
+            hasMore = (populars.size >= DomainConstanst.PAGE_SIZE)
+            mList.addAll(populars)
+            mAdapter.notifyDataSetChanged()
         }
     }
 
@@ -111,7 +128,9 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
 
 
     override fun showLoading() {
-        rl_loading.visibility = View.VISIBLE
+        if (page == 0) {
+            rl_loading.visibility = View.VISIBLE
+        }
     }
 
     override fun hideLoading() {

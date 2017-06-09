@@ -2,7 +2,7 @@ package com.wkw.hot.internal.di.subcomponents.main
 
 import com.wkw.hot.domain.executor.PostExecutionThread
 import com.wkw.hot.domain.executor.ThreadExecutor
-import com.wkw.hot.domain.interactor.PopularListUserCse
+import com.wkw.hot.domain.interactor.PopularListUserCase
 import com.wkw.hot.domain.repository.HotRepository
 import com.wkw.hot.internal.PerActivity
 import com.wkw.hot.mapper.PopularMapper
@@ -29,11 +29,11 @@ class MainModule(val fragment: MainFragment) {
     @Provides
     @PerActivity
     fun providePopularList(hotRepository: HotRepository, threadExecutor: ThreadExecutor,
-                           postExecutionThread: PostExecutionThread): PopularListUserCse = PopularListUserCse(hotRepository, threadExecutor, postExecutionThread)
+                           postExecutionThread: PostExecutionThread): PopularListUserCase = PopularListUserCase(hotRepository, threadExecutor, postExecutionThread)
 
     @Provides
     @PerActivity
     fun provideManPresenter(view: MainContract.MainView,
                             popularMapper: PopularMapper,
-                            popularListUserCse: PopularListUserCse) = MainPresenter(view, popularMapper, popularListUserCse)
+                            popularListUserCse: PopularListUserCase) = MainPresenter(view, popularMapper, popularListUserCse)
 }

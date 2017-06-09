@@ -10,8 +10,8 @@ import io.reactivex.Observable
 /**
  * Created by hzwukewei on 2017-6-6.
  */
-class PopularListUserCse(private val hotRepository: HotRepository, threadExecutor: ThreadExecutor,
-                         postExecutionThread: PostExecutionThread) : UseCase<PagePopularEntity>(threadExecutor, postExecutionThread) {
+class PopularListUserCase(private val hotRepository: HotRepository, threadExecutor: ThreadExecutor,
+                          postExecutionThread: PostExecutionThread) : UseCase<PagePopularEntity>(threadExecutor, postExecutionThread) {
 
     private var page: Int = DomainConstanst.FIRST_PAGE
     private var word: String? = null

@@ -13,9 +13,8 @@ import kotlinx.android.synthetic.main.item_main.view.*
 /**
  * Created by hzwukewei on 2017-6-8.
  */
-class MainAdapter(val listener: (PopularModel) -> Unit) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(val populars: List<PopularModel>, val listener: (PopularModel) -> Unit) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    var populars: List<PopularModel> = ArrayList()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(populars[position])
