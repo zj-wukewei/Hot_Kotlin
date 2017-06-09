@@ -2,7 +2,6 @@ package com.wkw.hot.view.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.view_retry.*
 import javax.inject.Inject
-
 
 
 /**
@@ -47,8 +45,10 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         Log.d(TAG, "onCreateView")
-        if (mFragmentView == null) {
-            mFragmentView = inflater.inflate(R.layout.fragment_main, null)
+        if (mFragmentView != null) {
+            (mFragmentView?.parent as? ViewGroup)?.removeView(mFragmentView)
+        } else {
+            mFragmentView = inflater.inflate(R.layout.fragment_main, container, false)
         }
         return mFragmentView
     }
@@ -57,6 +57,13 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
         HotApp.graph.plus(MainModule(this))
                 .injectTo(this)
         super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
+        bt_retry.setOnClickListener {
+            fetchData()
+        }
     }
 
     override fun fetchData() {
