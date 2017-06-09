@@ -11,6 +11,8 @@ import com.wkw.hot.HotApp
 import com.wkw.hot.R
 import com.wkw.hot.internal.di.subcomponents.main.MainModule
 import com.wkw.hot.model.PopularModel
+import com.wkw.hot.util.startActivity
+import com.wkw.hot.view.activity.WebActivity
 import com.wkw.hot.view.base.HotLazyFragment
 import com.wkw.hot.view.contract.MainContract
 import com.wkw.hot.view.presenter.MainPresenter
@@ -78,7 +80,7 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
 
         populars?.let {
             val adapter = MainAdapter {
-
+                context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
             }
             adapter.populars = populars
             recycler_view.adapter = adapter

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import com.wkw.hot.R
+import com.wkw.hot.util.startActivity
 import com.wkw.hot.view.base.ToolbarManager
 import com.wkw.hot.view.fragment.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
             mTitles.add(tab)
             mFragments.add(MainFragment.newInstance(tab))
         }
+
     }
 
     private fun initView() {

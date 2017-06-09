@@ -16,5 +16,5 @@ class PopularEntity(
         @SerializedName("contentImg")
         var picUrl: String?,
         @SerializedName("url")
-        var url: String?
+        var url: String
 )

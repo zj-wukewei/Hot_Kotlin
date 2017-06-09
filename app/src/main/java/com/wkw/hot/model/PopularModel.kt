@@ -10,4 +10,4 @@ data class PopularModel(
         var description: String,
 
         var picUrl: String?,
-        var url: String?)
+        var url: String)
