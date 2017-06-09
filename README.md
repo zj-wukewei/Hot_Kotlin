@@ -3,17 +3,17 @@
 
 ## Third Part Library
 
-+Rxjava
-+MVP
-+Dagger2
-+Retrofit
-+OkHttp3
-+Glide
-+Kotlin
++ Rxjava
++ MVP
++ Dagger2
++ Retrofit
++ OkHttp3
++ Glide
++ Kotlin
 
 ## Thanks
  https://github.com/antoniolg/Kotlin-for-Android-Developers
-
+ https://github.com/android10/Android-CleanArchitecture
 ## Thanks
 
  Copyright 2015 wukewei
