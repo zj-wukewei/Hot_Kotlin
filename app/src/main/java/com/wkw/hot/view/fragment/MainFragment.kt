@@ -45,8 +45,8 @@ class MainFragment : HotLazyFragment(), MainContract.MainView {
     @Inject
     lateinit var presenter: MainPresenter
 
-    var page: Int = 0
-    var hasMore: Boolean = true
+    private var page: Int = 0
+    private var hasMore: Boolean = true
     private lateinit var mAdapter: MainAdapter
     private var mList = ArrayList<PopularModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

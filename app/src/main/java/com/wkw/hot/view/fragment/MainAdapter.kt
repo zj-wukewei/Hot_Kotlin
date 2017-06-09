@@ -30,7 +30,7 @@ class MainAdapter(val populars: List<PopularModel>, val listener: (PopularModel)
     }
 
 
-    inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
         fun bind(model: PopularModel) {
             with(model) {
