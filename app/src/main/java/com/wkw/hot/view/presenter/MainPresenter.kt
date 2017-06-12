@@ -3,9 +3,7 @@ package com.wkw.hot.view.presenter
 import com.wkw.hot.domain.interactor.DefaultObserver
 import com.wkw.hot.domain.interactor.PopularListUserCase
 import com.wkw.hot.domain.model.PagePopularEntity
-import com.wkw.hot.exception.createException
 import com.wkw.hot.mapper.PopularMapper
-import com.wkw.hot.util.showToast
 import com.wkw.hot.view.contract.MainContract
 
 /**
@@ -16,22 +14,18 @@ class MainPresenter(override var mView: MainContract.MainView,
                     private var getPopularListUserCase: PopularListUserCase) : MainContract.Presenter {
 
     override fun getPoplars(page: Int, word: String) {
-        getView().showLoading()
+        getView().loading()
         getPopularListUserCase.setParam(page, word)
         getPopularListUserCase.execute(object : DefaultObserver<PagePopularEntity>() {
 
             override fun onError(e: Throwable?) {
                 super.onError(e)
-                getView().hideLoading()
-                getView().showRetry()
-                val msg = getView().context().createException(e as Exception)
-                getView().context().showToast(msg)
+                getView().showError(e as Exception)
             }
 
             override fun onComplete() {
                 super.onComplete()
-                getView().hideLoading()
-                getView().hideRetry()
+                getView().loadFinsh()
             }
 
             override fun onNext(value: PagePopularEntity) {

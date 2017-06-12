@@ -3,13 +3,12 @@ package com.wkw.hot.view.base
 /**
  * Created by hzwukewei on 2017-6-8.
  */
-interface LoadDataView: MvpView {
+interface LoadDataView : MvpView {
 
-    fun showLoading()
+    fun loading()
 
-    fun hideLoading()
+    fun showError(e: Exception)
 
-    fun showRetry()
+    fun loadFinsh()
 
-    fun hideRetry()
 }

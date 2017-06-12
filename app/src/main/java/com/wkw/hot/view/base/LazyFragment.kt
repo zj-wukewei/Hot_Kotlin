@@ -1,13 +1,12 @@
 package com.wkw.hot.view.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.View
 
 /**
  * Created by wukewei on 17/6/8.
  */
-abstract class HotLazyFragment: Fragment()  {
+abstract class LazyFragment : ListBaseFragment() {
 
     protected var isViewInitiated: Boolean = false
     protected var isVisibleToUser: Boolean = false
@@ -39,12 +38,11 @@ abstract class HotLazyFragment: Fragment()  {
      */
     fun prepareFetchData(forceUpdate: Boolean): Boolean {
         if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
-            fetchData()
+            fetchData(true)
             isDataInitiated = true
             return true
         }
         return false
     }
 
-    abstract fun fetchData()
 }
