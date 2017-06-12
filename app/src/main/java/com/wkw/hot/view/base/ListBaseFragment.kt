@@ -63,7 +63,7 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
         return mCurrentPage > DomainConstanst.FIRST_PAGE
     }
 
-    override fun loadFinsh() {
+    override fun loadFinish() {
         mIsFetching = false
         if (mCurrentPage == DomainConstanst.FIRST_PAGE) {
             setRefreshing(false)

@@ -9,6 +9,6 @@ interface LoadDataView : MvpView {
 
     fun showError(e: Exception)
 
-    fun loadFinsh()
+    fun loadFinish()
 
 }

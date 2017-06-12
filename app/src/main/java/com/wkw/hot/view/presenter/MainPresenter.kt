@@ -25,7 +25,7 @@ class MainPresenter(override var mView: MainContract.MainView,
 
             override fun onComplete() {
                 super.onComplete()
-                getView().loadFinsh()
+                getView().loadFinish()
             }
 
             override fun onNext(value: PagePopularEntity) {
