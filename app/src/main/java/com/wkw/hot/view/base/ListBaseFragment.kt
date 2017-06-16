@@ -10,6 +10,7 @@ import com.wkw.hot.exception.createException
 import com.wkw.hot.exception.isThereInternetConnection
 import com.wkw.hot.util.LoadMoreDelegate
 import com.wkw.hot.util.showToast
+import com.wkw.hot.view.adapter.LoadMoreAdapter
 import com.wkw.hot.view.widget.ProgressLayout
 
 /**
@@ -20,9 +21,14 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
     protected var mIsFetching: Boolean = false
     protected var mCurrentPage: Int = DomainConstanst.FIRST_PAGE
     protected var hasMore: Boolean = true
+        set(value) {
+            field = value
+            mLoadMoreAdapter.itemType = if (value) LoadMoreAdapter.ITEM_LOADING else LoadMoreAdapter.ITEM_LOADING_IDLE
+        }
     private lateinit var loadMoreDelegate: LoadMoreDelegate
     private var isInit = true
 
+    private lateinit var mLoadMoreAdapter: LoadMoreAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadMoreDelegate = LoadMoreDelegate(this)
@@ -37,6 +43,10 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
             hasMore = true
             fetchData(true)
         }
+        mLoadMoreAdapter = LoadMoreAdapter(getAdapter(), {
+            fetchData(false)
+        })
+        getRecyclerView().adapter = mLoadMoreAdapter
         loadMoreDelegate.attach(getRecyclerView())
     }
 
@@ -111,9 +121,9 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
                 })
             }
         } else {
+            mLoadMoreAdapter.itemType = LoadMoreAdapter.ITEM_LOADING_ERROR
             context.showToast(msg)
         }
-        restoreCurrentPage()
         setRefreshing(false)
     }
 
@@ -141,4 +151,5 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
     abstract fun getRecyclerView(): RecyclerView
     abstract fun getProgressLayout(): ProgressLayout
     abstract fun getSwipeRefreshLayout(): SwipeRefreshLayout
+    abstract fun getAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>
 }

@@ -67,12 +67,7 @@ class MainFragment : LazyFragment(), MainContract.MainView {
     }
 
     private fun initView() {
-        mAdapter = MainAdapter {
-            context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
-        }
-        mAdapter.populars = mList
-        recycler_view.adapter = mAdapter
-        recycler_view.layoutManager = LinearLayoutManager(activity)
+        getRecyclerView().layoutManager = LinearLayoutManager(activity)
     }
 
     override fun showPoplars(populars: List<PopularModel>?) {
@@ -84,6 +79,15 @@ class MainFragment : LazyFragment(), MainContract.MainView {
             mList.addAll(populars)
             mAdapter.populars = mList
         }
+    }
+
+
+    override fun getAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        mAdapter = MainAdapter {
+            context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
+        }
+        mAdapter.populars = mList
+        return mAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun fetchData(clear: Boolean) {
