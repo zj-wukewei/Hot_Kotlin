@@ -19,7 +19,7 @@ class LoadMoreAdapter(inner: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
         //加载失败
         val ITEM_LOADING_ERROR = -2000
         //到底了
-        val ITEM_LOADING_IDLE = -3000
+        val ITEM_LOADING_DONE = -3000
     }
 
     var itemType = ITEM_LOADING
@@ -32,7 +32,7 @@ class LoadMoreAdapter(inner: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
         return when (viewType) {
             ITEM_LOADING -> LoadMoreViewHolder(parent!!)
             ITEM_LOADING_ERROR -> LoadMoreViewHolder(parent!!)
-            ITEM_LOADING_IDLE -> LoadMoreViewHolder(parent!!)
+            ITEM_LOADING_DONE -> LoadMoreViewHolder(parent!!)
             else -> innerAdapter.onCreateViewHolder(parent, viewType)
         }
     }
@@ -71,7 +71,7 @@ class LoadMoreAdapter(inner: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
                         }
                     }
                 }
-                ITEM_LOADING_IDLE -> {
+                ITEM_LOADING_DONE -> {
                     if (holder!!.itemView.item_load_end.visibility != View.VISIBLE) {
                         holder!!.itemView.item_loading.visibility = View.GONE
                         holder.itemView.item_load_end.visibility = View.VISIBLE
@@ -117,7 +117,7 @@ class LoadMoreAdapter(inner: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
                     val type = getItemViewType(position)
                     return if (type == ITEM_LOADING ||
                             type == ITEM_LOADING_ERROR ||
-                            type == ITEM_LOADING_IDLE)
+                            type == ITEM_LOADING_DONE)
                         manager.spanCount else 1
                 }
             }

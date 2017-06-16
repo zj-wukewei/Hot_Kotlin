@@ -23,7 +23,7 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
     protected var hasMore: Boolean = true
         set(value) {
             field = value
-            mLoadMoreAdapter.itemType = if (value) LoadMoreAdapter.ITEM_LOADING else LoadMoreAdapter.ITEM_LOADING_IDLE
+            mLoadMoreAdapter.itemType = if (value) LoadMoreAdapter.ITEM_LOADING else LoadMoreAdapter.ITEM_LOADING_DONE
         }
     private lateinit var loadMoreDelegate: LoadMoreDelegate
     private var isInit = true
