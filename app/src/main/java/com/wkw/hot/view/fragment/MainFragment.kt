@@ -77,7 +77,7 @@ class MainFragment : LazyFragment(), MainContract.MainView {
                 mList.clear()
             }
             mList.addAll(populars)
-            mAdapter.populars = mList
+            mAdapter.replace(mList)
         }
     }
 
@@ -86,7 +86,6 @@ class MainFragment : LazyFragment(), MainContract.MainView {
         mAdapter = MainAdapter {
             context.startActivity<WebActivity>(WebActivity.TITLE to it.title, WebActivity.URL to it.url)
         }
-        mAdapter.populars = mList
         return mAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
