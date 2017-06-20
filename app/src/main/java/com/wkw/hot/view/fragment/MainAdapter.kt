@@ -4,6 +4,7 @@ import android.view.View
 import com.wkw.hot.R
 import com.wkw.hot.model.PopularModel
 import com.wkw.hot.util.loadUrl
+import com.wkw.hot.util.singleClick
 import com.wkw.hot.view.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.item_main.view.*
 
@@ -18,6 +19,7 @@ class MainAdapter(val listener: (PopularModel) -> Unit) : BaseAdapter<PopularMod
             itemView.tv_title.text = "$title"
             itemView.tv_description.text = "来自:${description}"
         }
+        itemView.singleClick { listener(item) }
     }
 
     override fun getLayoutId(): Int {

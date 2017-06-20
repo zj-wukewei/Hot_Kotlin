@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 /**
  * Created by hzwukewei on 2017-6-7.
  */
-fun View.singeleClick(l: (android.view.View?) -> Unit) {
+fun View.singleClick(l: (android.view.View?) -> Unit) {
     setOnClickListener(SingleClickListener(l))
 }
 
