@@ -27,11 +27,11 @@ class MainAdapter(val listener: (PopularModel) -> Unit) : BaseAdapter<PopularMod
     }
 
     override fun areItemsTheSame(oldItem: PopularModel, newItem: PopularModel): Boolean {
-        return oldItem.title.equals(newItem.title)
+        return oldItem.title == newItem.title
     }
 
     override fun areContentsTheSame(oldItem: PopularModel, newItem: PopularModel): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == newItem
     }
 
 

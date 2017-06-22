@@ -20,7 +20,7 @@ class MainPresenter(override var mView: MainContract.MainView,
 
             override fun onError(e: Throwable?) {
                 super.onError(e)
-                getView().showError(e as Exception)
+                getView().showError(Exception(e))
             }
 
             override fun onComplete() {
