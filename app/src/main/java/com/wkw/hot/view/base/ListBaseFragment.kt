@@ -3,6 +3,7 @@ package com.wkw.hot.view.base
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.wkw.hot.domain.DomainConstanst
@@ -27,7 +28,7 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
         }
     private lateinit var loadMoreDelegate: LoadMoreDelegate
     private var isInit = true
-
+    private var isFist = true
     private lateinit var mLoadMoreAdapter: LoadMoreAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,13 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (isFist) {
+            isFist = false
+            initSwipeRefreshAndRecycler()
+        }
+    }
+
+    protected fun initSwipeRefreshAndRecycler() {
         getSwipeRefreshLayout().setColorSchemeResources(android.R.color.black)
         getSwipeRefreshLayout().setOnRefreshListener {
             mCurrentPage = DomainConstanst.FIRST_PAGE
@@ -47,6 +55,7 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
             fetchData(false)
         })
         getRecyclerView().adapter = mLoadMoreAdapter
+        getRecyclerView().layoutManager = getDefaultLayoutManager()
         loadMoreDelegate.attach(getRecyclerView())
     }
 
@@ -103,6 +112,10 @@ abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubje
 
     fun setFailedText(text: CharSequence) {
         getProgressLayout().setFailedText(text)
+    }
+
+    protected fun getDefaultLayoutManager(): RecyclerView.LayoutManager {
+        return LinearLayoutManager(activity)
     }
 
     override fun showError(e: Exception) {

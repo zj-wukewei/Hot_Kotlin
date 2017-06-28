@@ -16,7 +16,7 @@ class MainAdapter(val listener: (PopularModel) -> Unit) : BaseAdapter<PopularMod
     override fun bind(itemView: View, item: PopularModel) {
         with(item) {
             itemView.img_item.loadUrl("$picUrl")
-            itemView.tv_title.text = "$title"
+            itemView.tv_title.text = title
             itemView.tv_description.text = "来自:${description}"
         }
         itemView.singleClick { listener(item) }

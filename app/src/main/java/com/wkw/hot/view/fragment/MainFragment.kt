@@ -63,12 +63,8 @@ class MainFragment : LazyFragment(), MainContract.MainView {
         HotApp.graph.plus(MainModule(this))
                 .injectTo(this)
         super.onViewCreated(view, savedInstanceState)
-        initView()
     }
 
-    private fun initView() {
-        getRecyclerView().layoutManager = LinearLayoutManager(activity)
-    }
 
     override fun showPoplars(populars: List<PopularModel>?) {
         populars?.let {
