@@ -6,7 +6,7 @@ import android.view.View
 /**
  * Created by wukewei on 17/6/8.
  */
-abstract class LazyFragment : ListBaseFragment() {
+abstract class LazyFragment<V : MvpView, out P : MvpPresenter<V>> : ListBaseFragment<V, P>() {
 
     protected var isViewInitiated: Boolean = false
     protected var isVisibleToUser: Boolean = false

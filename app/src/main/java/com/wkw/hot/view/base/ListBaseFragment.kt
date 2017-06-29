@@ -17,7 +17,7 @@ import com.wkw.hot.view.widget.ProgressLayout
 /**
  * Created by hzwukewei on 2017-6-12.
  */
-abstract class ListBaseFragment : BaseFragment(), LoadMoreDelegate.LoadMoreSubject, LoadDataView {
+abstract class ListBaseFragment<V : MvpView, out P : MvpPresenter<V>> : MvpFragment<V, P>(), LoadMoreDelegate.LoadMoreSubject, LoadDataView {
 
     protected var mIsFetching: Boolean = false
     protected var mCurrentPage: Int = DomainConstanst.FIRST_PAGE

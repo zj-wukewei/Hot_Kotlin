@@ -2,7 +2,6 @@ package com.wkw.hot.view.fragment
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,7 +25,7 @@ import javax.inject.Inject
 /**
  * Created by hzwukewei on 2017-6-8.
  */
-class MainFragment : LazyFragment(), MainContract.MainView {
+class MainFragment : LazyFragment<MainContract.MainView, MainContract.Presenter>(), MainContract.MainView {
 
 
     private val TAG: String = MainFragment::class.java.simpleName
@@ -65,6 +64,9 @@ class MainFragment : LazyFragment(), MainContract.MainView {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun getPresenter(): MainContract.Presenter {
+        return presenter
+    }
 
     override fun showPoplars(populars: List<PopularModel>?) {
         populars?.let {
@@ -103,21 +105,5 @@ class MainFragment : LazyFragment(), MainContract.MainView {
     override fun getSwipeRefreshLayout(): SwipeRefreshLayout {
         return swipe_layout
     }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.resume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.pause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.destroy()
-    }
-
 
 }
