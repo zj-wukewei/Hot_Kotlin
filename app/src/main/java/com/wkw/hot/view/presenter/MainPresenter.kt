@@ -16,23 +16,33 @@ class MainPresenter(override var mView: MainContract.MainView,
     override fun getPoplars(page: Int, word: String) {
         getView().loading()
         getPopularListUserCase.setParam(page, word)
-        getPopularListUserCase.execute(object : DefaultObserver<PagePopularEntity>() {
-
-            override fun onError(e: Throwable?) {
-                super.onError(e)
-                getView().showError(Exception(e))
-            }
-
-            override fun onComplete() {
-                super.onComplete()
-                getView().loadFinish()
-            }
-
-            override fun onNext(value: PagePopularEntity) {
-                super.onNext(value)
-                getView().showPoplars(popularMapper.transform(value.pagebean.contentlist))
-            }
-        })
+//        getPopularListUserCase.execute(object : DefaultObserver<PagePopularEntity>() {
+//
+//            override fun onError(e: Throwable?) {
+//                super.onError(e)
+//                getView().showError(Exception(e))
+//            }
+//
+//            override fun onComplete() {
+//                super.onComplete()
+//                getView().loadFinish()
+//            }
+//
+//            override fun onNext(value: PagePopularEntity) {
+//                super.onNext(value)
+//                getView().showPoplars(popularMapper.transform(value.pagebean.contentlist))
+//            }
+//        })
+        getPopularListUserCase.execute(DefaultObserver<PagePopularEntity>()
+                .onError {
+                    getView().showError(Exception(it))
+                }
+                .onCompleted {
+                    getView().loadFinish()
+                }
+                .onNext {
+                    getView().showPoplars(popularMapper.transform(it.pagebean.contentlist))
+                })
     }
 
     override fun resume() {

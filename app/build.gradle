@@ -37,6 +37,7 @@ dependencies {
     compile rootProject.ext.libRxJava
     compile rootProject.ext.libGlide
     compile rootProject.ext.libRxAndroid
+    compile rootProject.ext.libRxKotlin
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportV4
     compile rootProject.ext.libCardview

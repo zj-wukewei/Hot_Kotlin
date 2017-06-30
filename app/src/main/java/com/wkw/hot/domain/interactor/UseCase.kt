@@ -4,8 +4,8 @@ import com.wkw.hot.domain.executor.PostExecutionThread
 import com.wkw.hot.domain.executor.ThreadExecutor
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 
@@ -18,10 +18,10 @@ abstract class UseCase<T>(val threadExecutor: ThreadExecutor, val postExecutionT
     abstract fun buildUseCaseObservable(): Observable<T>
 
     fun execute(observer: DisposableObserver<T>) {
-        val observable: Observable<T> = buildUseCaseObservable()
+        buildUseCaseObservable()
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
-        addDisposable(observable.subscribeWith(observer))
+                .subscribeWith(observer).addTo(disposables)
     }
 
 
@@ -29,9 +29,5 @@ abstract class UseCase<T>(val threadExecutor: ThreadExecutor, val postExecutionT
         if (!disposables.isDisposed) {
             disposables.dispose()
         }
-    }
-
-    private fun addDisposable(disposable: Disposable) {
-        disposables.add(disposable)
     }
 }
